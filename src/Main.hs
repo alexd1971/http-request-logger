@@ -18,7 +18,7 @@ main :: IO ()
 main = run 7777 requestLogger
 
 logFile :: FilePath
-logFile = "requests.log"
+logFile = "/var/log/requests.log"
 
 requestLogger :: Application
 requestLogger request respond = do
