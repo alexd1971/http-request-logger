@@ -13,6 +13,7 @@ import Network.HTTP.Types
 import Network.Wai
 import Network.Wai.Handler.Warp
 import System.IO
+import Data.List (isPrefixOf)
 
 main :: IO ()
 main = run 7777 requestLogger
@@ -33,7 +34,7 @@ requestLogger request respond = do
        bodyBytes <- strictRequestBody request
        let headers = requestHeaders request
            contentType = toString $ fromMaybe "" (lookup hContentType headers)
-       if contentType == "application/json"
+       if "application/json" `isPrefixOf` contentType
          then do
            let bodyJson = fromMaybe emptyObject . decode $ bodyBytes
            hPutStrLn handle (toString . toStrict . encodePretty $ bodyJson)
